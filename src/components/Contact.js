@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Container,Row,Col } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import contactImg from "../assets/img/contact-img.svg"
 
 function Contact(){
@@ -22,9 +22,25 @@ function Contact(){
         })
     }
 
-    function handleSubmit(){
-        
-    }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setButtonText("Sending...");
+        let response = await fetch("http://localhost:3000/contact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json;charset=utf-8",
+          },
+          body: JSON.stringify(formDetails),
+        });
+        setButtonText("Send");
+        let result = await response.json();
+        setFormDetails(formInitialDetails);
+        if (result.code === 200) {
+          setStatus({ succes: true, message: 'Message sent successfully'});
+        } else {
+          setStatus({ succes: false, message: 'Something went wrong, please try again later.'});
+        }
+      };
 
     return(
         <section className="contact" id="connect">

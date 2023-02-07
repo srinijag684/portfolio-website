@@ -13,13 +13,14 @@ function Banner(){
     const [delta, setDelta]= useState(300-Math.random()*100);
     const period = 2000;
 
-    useEffect(()=>{
+    useEffect(() => {
         let ticker = setInterval(() => {
-            tick();
-          }, delta);
-
-        return()=>{clearInterval(ticker)};
-    },[text])
+          tick();
+        }, delta);
+    
+        return () => { clearInterval(ticker) };
+      }, [text])
+    
 
     function tick(){
         let i = loopNum % toRotate.length;
